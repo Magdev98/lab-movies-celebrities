@@ -2,6 +2,8 @@ const router = require("express").Router();
 const Movie = require("../models/Movie.model");
 const Celebrity = require("../models/Celebrity.model");
 
+// Iteration #6: Adding New Movies
+
 router.get("/", async (req, res, next) => {
   try {
     const allMovies = await Movie.find().populate("cast");
@@ -31,6 +33,8 @@ router.post("/create", async (req, res, next) => {
   }
 });
 
+// Iteration #7: Listing Our Movies
+
 router.get("/", async (req, res, next) => {
   try {
     const allMovies = await Movie.find();
@@ -40,8 +44,10 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// Iteration #8: The Movie Details Page
+
 router.get("/:id", (req, res, next) => {
-    Movie.findById(req.params.id)
+  Movie.findById(req.params.id)
     .populate("cast")
     .then((detailMovie) => {
       res.render("movies/movie-details", { movies: detailMovie });
@@ -49,4 +55,16 @@ router.get("/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
+// Iteration #9: Deleting Movies
+
+router.post("/:id/delete", (req, res, next) => {
+  Movie.findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.redirect("/movies");
+    })
+    .catch((error) => next(error));
+});
+
 module.exports = router;
+
+// Iteration #10: Editing Movies
