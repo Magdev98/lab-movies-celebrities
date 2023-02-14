@@ -11,14 +11,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get('/create', async (req, res, next) => {
-    try {
-        const allCelebrities = await Celebrity.find();
-        res.render("movies/new-movie", { allCelebrities });
-    } catch (error) {
-        next(error);
-    }
-})
+router.get("/create", async (req, res, next) => {
+  try {
+    const allCelebrities = await Celebrity.find();
+    res.render("movies/new-movie", { allCelebrities });
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post("/create", async (req, res, next) => {
   //create movie with destructuration object
@@ -32,12 +32,21 @@ router.post("/create", async (req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
-    try {
-      const allMovies = await Movie.find();
-      res.render("movies/movies", { movies: allMovies });
-    } catch (error) {
-      next(error);
-    }
-  });
+  try {
+    const allMovies = await Movie.find();
+    res.render("movies/movies", { movies: allMovies });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:id", (req, res, next) => {
+    Movie.findById(req.params.id)
+    .populate("cast")
+    .then((detailMovie) => {
+      res.render("movies/movie-details", { movies: detailMovie });
+    })
+    .catch((error) => next(error));
+});
 
 module.exports = router;

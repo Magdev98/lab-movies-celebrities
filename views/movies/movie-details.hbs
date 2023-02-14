@@ -1,0 +1,19 @@
+<h2>Movie Details</h2>
+<section>
+  <ul>
+    <li>Title: {{movies.title}}</li>
+    <li>Genre: {{movies.genre}}</li>
+    <li>Plot: {{movies.plot}}</li>
+  </ul>
+</section>
+<section>
+  {{#each movies}}
+    {{#each cast}}
+      <ul>
+        <li>Name: {{name}}</li>
+        <li>Occupation: {{occupation}}</li>
+        <li>Catchphrase: {{catchPhrase}}</li>
+      </ul>
+    {{/each}}
+  {{/each}}
+</section>
